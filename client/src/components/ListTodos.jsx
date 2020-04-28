@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import "./CompStyle.css";
+
 const ListTodos = () => {
   const [todos, setTodos] = useState([]);
 
@@ -11,6 +12,24 @@ const ListTodos = () => {
       setTodos(todos.filter((todo) => todo.id !== id));
     } catch (error) {
       console.log(`Error Deleting Todo: ${error}`);
+    }
+  };
+
+  const markDone = (id) => {
+    try {
+      const body = {
+        status: true,
+      };
+      if (id) {
+        fetch(`http://localhost:5000/todos/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+      }
+      window.location.replace("/notdone");
+    } catch (err) {
+      console.error(err.message);
     }
   };
 
@@ -28,6 +47,10 @@ const ListTodos = () => {
     getTodos();
   }, []);
 
+  const trueTodo = todos.filter(function (todo) {
+    return todo.status === false || todo.status === null;
+  });
+
   return (
     <div className="Table-wrapper">
       <Fragment>
@@ -41,10 +64,17 @@ const ListTodos = () => {
             </tr>
           </thead>
           <tbody>
-            {todos.map((todo) => (
+            {trueTodo.map((todo) => (
               <tr key={todo.id}>
                 <td>
-                  <button className="btn btn-success">Done</button>
+                  <button
+                    className="btn btn-success"
+                    onClick={() => {
+                      markDone(todo.id);
+                    }}
+                  >
+                    Done
+                  </button>
                 </td>
                 <td className="align-middle">{todo.description}</td>
                 <td className="align-middle">

@@ -19,7 +19,7 @@ const InputTodo = () => {
         });
       }
 
-      window.location = "/";
+      window.location = "/notdone";
     } catch (error) {
       console.error(error.message);
     }
@@ -36,6 +36,7 @@ const InputTodo = () => {
             setDescription(e.target.value);
           }}
         ></input>
+
         <button className="btn btn-success"> Add </button>
       </form>
     </Fragment>
