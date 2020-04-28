@@ -1,10 +1,10 @@
-var models = require("../models");
-var express = require("express");
-var router = express.Router();
+const models = require("../models");
+const express = require("express");
+const router = express.Router();
 
 router.delete("/:id", async (req, res) => {
   try {
-    const id  = req.params.id;
+    const id = req.params.id;
     await models.Todo.destroy({
       where: {
         id: id,
