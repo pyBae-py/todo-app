@@ -9,7 +9,7 @@ router.post("/", async (req, res) => {
       description: description,
       status: status,
     });
-    res.json(todos);
+    res.json({ msg: "Todo Posted" });
   } catch (error) {
     console.log(`Error posting todos: ${error}`);
     res.status(500).end("Internal server error");
